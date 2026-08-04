@@ -5,7 +5,7 @@ from ..internal.models import Priorities
 from ..internal.types import Conn, TaskFilter
 from .router import router
 
-# GET /tasks/
+# GET /v1/tasks/
 
 
 @router.get("/", tags=["Read"])
@@ -51,7 +51,7 @@ def view_tasks(
         }
 
 
-# GET /tasks/{_id}
+# GET /v1/tasks/{_id}
 @router.get("/{_id:int}", tags=["Read"])
 def view_task(_id: int, connection: Conn):
     with connection.cursor() as cursor:

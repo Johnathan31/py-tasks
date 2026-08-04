@@ -5,7 +5,7 @@ from ..internal.models import TaskFields
 from ..internal.types import Conn
 
 
-# POST /tasks/
+# POST /v1/tasks/
 @router.post("/", tags=["Create"], status_code=201)
 def create_task(task: TaskFields, connection: Conn):
     with connection.cursor() as cursor:

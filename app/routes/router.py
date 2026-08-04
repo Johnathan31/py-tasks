@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
 router: APIRouter = APIRouter(
-    prefix="/tasks",
+    prefix="/v1/tasks",
     tags=["CRUD"]
 )

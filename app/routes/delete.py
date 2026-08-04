@@ -4,7 +4,7 @@ from ..internal.types import Conn
 from ..internal.models import TaskIds
 from fastapi import HTTPException
 
-# DELETE /tasks/
+# DELETE /v1/tasks/
 
 
 @router.delete("/", tags=["Delete"], status_code=204)
@@ -65,7 +65,7 @@ def delete_all(
         return
 
 
-# DELETE /tasks/{_id}
+# DELETE /v1/tasks/{_id}
 @router.delete("/{_id:int}", tags=["Delete"], status_code=204)
 def delete_task_by_id(_id: int, connection: Conn):
     with connection.cursor() as cursor:
@@ -87,7 +87,7 @@ def delete_task_by_id(_id: int, connection: Conn):
         return
 
 
-# DELETE /tasks/completed
+# DELETE /v1/tasks/completed
 @router.delete("/completed", tags=["Delete"], status_code=204)
 def delete_done_tasks(connection: Conn):
     with connection.cursor() as cursor:

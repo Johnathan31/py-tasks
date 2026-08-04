@@ -4,7 +4,7 @@ from .router import router
 from ..internal.models import TaskFields, TaskOptionalFields
 from fastapi import HTTPException
 
-# PUT /tasks/{_id}
+# PUT /v1/tasks/{_id}
 
 
 @router.put(
@@ -42,7 +42,7 @@ def update_task_by_id(
         return
 
 
-# PATCH /tasks/{_id}
+# PATCH /v1/tasks/{_id}
 @router.patch(
     "/{_id:int}",
     tags=["Update"],

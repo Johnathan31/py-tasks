@@ -2,16 +2,16 @@
 
 ## 🌂 Endpoints
 
-| Method | Endpoint         | Description           |
-| ------ | ---------------- | --------------------- |
-| GET    | /tasks/          | Get all tasks         |
-| GET    | /tasks/{\_id}    | Get a task by ID      |
-| POST   | /tasks/          | Create a task         |
-| DELETE | /tasks/          | Delete all tasks      |
-| DELETE | /tasks/{\_id}    | Delete a task by ID   |
-| DELETE | /tasks/completed | Delete finished tasks |
-| PUT    | /tasks/{\_id}    | Update a task by ID   |
-| PATCH  | /tasks/{\_id}    | Update part of a task |
+| Method | Endpoint            | Description           |
+| ------ | ------------------- | --------------------- |
+| GET    | /v1/tasks/          | Get all tasks         |
+| GET    | /v1/tasks/{\_id}    | Get a task by ID      |
+| POST   | /v1/tasks/          | Create a task         |
+| DELETE | /v1/tasks/          | Delete all tasks      |
+| DELETE | /v1/tasks/{\_id}    | Delete a task by ID   |
+| DELETE | /v1/tasks/completed | Delete finished tasks |
+| PUT    | /v1/tasks/{\_id}    | Update a task by ID   |
+| PATCH  | /v1/tasks/{\_id}    | Update part of a task |
 
 ---
 
@@ -22,7 +22,7 @@
 #### Request
 
 ```http
-POST /tasks/ HTTP/1.1
+POST /v1/tasks/ HTTP/1.1
 Content-Type: application/json
 ```
 
@@ -58,7 +58,7 @@ HTTP/1.1 201 Created
 #### Request
 
 ```http
-GET /tasks/1 HTTP/1.1
+GET /v1/tasks/1 HTTP/1.1
 ```
 
 #### Response
@@ -85,7 +85,7 @@ HTTP/1.1 200 OK
 #### Request
 
 ```http
-DELETE /tasks/1 HTTP/1.1
+DELETE /v1/tasks/1 HTTP/1.1
 ```
 
 #### Response
@@ -101,7 +101,7 @@ HTTP/1.1 204 No Content
 #### Request
 
 ```http
-PATCH /tasks/1 HTTP/1.1
+PATCH /v1/tasks/1 HTTP/1.1
 ```
 
 ```JSON

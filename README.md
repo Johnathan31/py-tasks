@@ -181,7 +181,7 @@ uvicorn app.main:app --reload --host=0.0.0.0
 | URI                        | Description                           |
 | -------------------------- | ------------------------------------- |
 | http://0.0.0.0:8000/       | Root Entry point                      |
-| http://0.0.0.0:8000/tasks/ | CRUD operations                       |
+| http://0.0.0.0:8000/v1/tasks/ | CRUD operations                       |
 | http://0.0.0.0:8000/docs/  | Auto-generated OpenAPI **Swagger UI** |
 | http://0.0.0.0:8000/redoc/ | Auto-generated OpenAPI **ReDoc**      |
 
