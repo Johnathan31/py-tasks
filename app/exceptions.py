@@ -42,7 +42,7 @@ def register_exception_handlers(app: FastAPI) -> None:
         _: Request,
         exc: HTTPException
     ):
-        logger.exception("HTTP Exception occurred:", exc_info=exc)
+        logger.error("HTTP Exception occurred:", exc_info=exc)
 
         return JSONResponse(
             status_code=exc.status_code,
@@ -57,7 +57,7 @@ def register_exception_handlers(app: FastAPI) -> None:
         _: Request,
         exc: RequestValidationError
     ):
-        logger.exception(
+        logger.error(
             "Validation error occured on the request", exc_info=exc)
 
         return JSONResponse(

@@ -5,7 +5,11 @@ from pathlib import Path
 
 env: Path = Path(__file__).parent.parent.parent / ".env"
 
-load_dotenv(dotenv_path=env)
+load_dotenv(dotenv_path=env, override=True)
+
+if not getenv("PASSWORD"):
+    raise Exception(
+        "\"PASSWORD\" environment variable not provided or empty.")
 
 # Environment Variables
 

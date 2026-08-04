@@ -4,7 +4,7 @@ from .router import router
 from ..internal.models import TaskFields, TaskOptionalFields
 from fastapi import HTTPException
 
-# PUT /v1/tasks/{_id}
+# PUT /v2/tasks/{_id}
 
 
 @router.put(
@@ -36,13 +36,15 @@ def update_task_by_id(
         if cursor.rowcount == 0:
             raise HTTPException(
                 404,
-                detail=F"No task with ID {_id}"
+                detail={
+                    "error": F"No task with ID {_id}"
+                }
             )
 
         return
 
 
-# PATCH /v1/tasks/{_id}
+# PATCH /v2/tasks/{_id}
 @router.patch(
     "/{_id:int}",
     tags=["Update"],
@@ -55,10 +57,12 @@ def update_task_field(
 ):
     with connection.cursor() as cursor:
         updates: dict[str, Any] = body.model_dump(exclude_unset=True)
+
         if not updates:
             raise HTTPException(
-                400,
-                detail="No field(s) to update."
+                422, detail={
+                    "error": "Empty request body content."
+                }
             )
 
         cursor.execute(
@@ -71,7 +75,9 @@ def update_task_field(
         if cursor.fetchone() is None:
             raise HTTPException(
                 404,
-                detail=f"No task found with id {_id}"
+                detail={
+                    "error": f"No task found with id {_id}"
+                }
             )
 
         clause = ", ".join(

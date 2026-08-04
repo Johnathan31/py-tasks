@@ -1,3 +1,4 @@
+from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 from ..internal.env import host, port, dbname, user, password
 
@@ -12,5 +13,6 @@ pool = ConnectionPool(
     ),
     min_size=2,
     max_size=10,
-    open=False
+    open=False,
+    kwargs={"row_factory": dict_row}
 )

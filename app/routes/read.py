@@ -2,33 +2,34 @@ from typing import Optional
 from fastapi import HTTPException
 
 from ..internal.models import Priorities
-from ..internal.types import Conn, TaskFilter
+from ..internal.types import Conn
 from .router import router
 
-# GET /v1/tasks/
+# GET /v2/tasks/
 
 
 @router.get("/", tags=["Read"])
 def view_tasks(
     connection: Conn,
-    title: Optional[str] = None,
     priority: Optional[Priorities] = None,
-    done: Optional[bool] = None
+    done: Optional[bool] = None,
+    search: Optional[str] = None
 ):
     with connection.cursor() as cursor:
-        filters: TaskFilter = {}
+        clauses: list[str] = []
+        params: list = []
 
-        if title is not None:
-            filters["title"] = title
         if priority is not None:
-            filters["priority"] = priority
-        if done is not None:
-            filters["done"] = done
+            clauses.append("priority = %s")
+            params.append(priority)
 
-        clause = " AND ".join(
-            f"{key} = %s"
-            for key, _ in filters.items()
-        )
+        if done is not None:
+            clauses.append("done = %s")
+            params.append(done)
+
+        if search is not None:
+            clauses.append("title ILIKE %s")
+            params.append(f"%{search}%")
 
         query: str = f"""
         SELECT id,
@@ -36,22 +37,20 @@ def view_tasks(
                priority,
                done
         FROM tasks
+        ORDER BY id
             """
 
-        if clause:
-            query += f"\nWHERE {clause};"
+        if clauses:
+            query += f"\nWHERE " + " AND ".join(clauses) + ";"
 
-        cursor.execute(
-            query,  # type: ignore
-            [val for _, val in filters.items()]
-        )
+        cursor.execute(query, params)  # type: ignore
 
         return {
             "tasks": cursor.fetchall()
         }
 
 
-# GET /v1/tasks/{_id}
+# GET /v2/tasks/{_id}
 @router.get("/{_id:int}", tags=["Read"])
 def view_task(_id: int, connection: Conn):
     with connection.cursor() as cursor:

@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from enum import StrEnum
 
 
@@ -13,13 +13,13 @@ class Priorities(StrEnum):
 
 
 class TaskFields(BaseModel):
-    title: str
+    title: str = Field(..., max_length=50)
     priority: Priorities
     done: bool
 
 
 class TaskOptionalFields(BaseModel):
-    title: Optional[str] = None
+    title: Optional[str] = Field(None, max_length=50)
     priority: Optional[Priorities] = None
     done: Optional[bool] = None
 

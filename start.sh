@@ -1,2 +1,3 @@
-# Serve The FastAPI server usjng uvicorn
-uvicorn app.main:app --reload --
+#!/bin/sh
+# Serve The FastAPI server using uvicorn
+uvicorn app.main:app --reload --host=0.0.0.0

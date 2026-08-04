@@ -4,7 +4,7 @@ from ..internal.types import Conn
 from ..internal.models import TaskIds
 from fastapi import HTTPException
 
-# DELETE /v1/tasks/
+# DELETE /v2/tasks/
 
 
 @router.delete("/", tags=["Delete"], status_code=204)
@@ -16,7 +16,9 @@ def delete_all(
         if not body:  # type: ignore
             cursor.execute("DELETE FROM tasks;")
         else:
-            if len(body.ids) < 1:
+            ids: list[int] = list(set(body.ids))
+
+            if not ids:
                 raise HTTPException(
                     status_code=422,
                     detail={
@@ -25,47 +27,38 @@ def delete_all(
                 )
             clause = " OR ".join(
                 "id = %s"
-                for _ in body.ids  # type: ignore
+                for _ in ids
             )
 
             query: str = f"""
-                    DELETE FROM tasks
-                    WHERE {clause}
-                    RETURNING id;
-                    """
+                DELETE FROM tasks
+                WHERE {clause}
+                RETURNING id;
+            """
 
             cursor.execute(
                 query,
-                body.ids
+                ids
             )
 
             deleted_ids: list = cursor.fetchall()
 
-        if not body:
-
-            if cursor.rowcount < 0:
-                raise HTTPException(
-                    status_code=500,
-                    detail={
-                        "error": "internal server error.",
-                    }
-                )
-        else:
-            if len(deleted_ids) != len(body.ids):  # type: ignore
+        if body:
+            if len(deleted_ids) != len(ids):  # type: ignore
                 raise HTTPException(
                     status_code=404,
                     detail={
                         "error": "Some task IDs were not found.",
 
                         # type: ignore
-                        "deleted_ids": [row[0] for row in deleted_ids]
+                        "found_ids": [row["id"] for row in deleted_ids]
                     }
                 )
 
         return
 
 
-# DELETE /v1/tasks/{_id}
+# DELETE /v2/tasks/{_id}
 @router.delete("/{_id:int}", tags=["Delete"], status_code=204)
 def delete_task_by_id(_id: int, connection: Conn):
     with connection.cursor() as cursor:
@@ -81,13 +74,15 @@ def delete_task_by_id(_id: int, connection: Conn):
         if cursor.rowcount == 0:
             raise HTTPException(
                 404,
-                detail=f"No task with ID {_id}"
+                detail={
+                    "error": f"No task with ID {_id}"
+                }
             )
 
         return
 
 
-# DELETE /v1/tasks/completed
+# DELETE /v2/tasks/completed
 @router.delete("/completed", tags=["Delete"], status_code=204)
 def delete_done_tasks(connection: Conn):
     with connection.cursor() as cursor:

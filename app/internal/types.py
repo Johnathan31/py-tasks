@@ -6,5 +6,3 @@ from ..database.dependencies import get_connection
 
 
 type Conn = Annotated[Connection, Depends(get_connection)]
-
-type TaskFilter = dict[str, str | Priorities | bool]

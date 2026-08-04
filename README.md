@@ -22,7 +22,11 @@ It demonstrates building a _Medium-Scaled_ Python API, using FastAPI.
 
 ## ⚙️ Features
 
-- A **RESTful API** using FastAPI.
+- A **RESTful API** using FastAPI, controlling:
+  - Task creation.
+  - Task Reading.
+  - Task updating.
+  - Task deletion (for details, see [API docs](./api.md))
 
 - 🛠️ _CRUD Operations_ Endpoints.
 
@@ -92,7 +96,7 @@ py-tasks
 
 - Python _v3.13_
 - FastAPI _v0.138_
-- Rust (with _Cargo_)
+- Rust (for compiling FastAPI source code)
 - Rustc (Optional)
 
 ### Skills
@@ -174,16 +178,22 @@ For more details, see [.env sample file](./.env.example)
 uvicorn app.main:app --reload --host=0.0.0.0
 ```
 
+or directly with a ready [shell script](./start.sh):
+
+```Bash
+chmod +x start.sh
+./start.sh
+```
+
 ---
 
 ## 🌐 Common URIs
 
-| URI                        | Description                           |
-| -------------------------- | ------------------------------------- |
-| http://0.0.0.0:8000/       | Root Entry point                      |
-| http://0.0.0.0:8000/v1/tasks/ | CRUD operations                       |
-| http://0.0.0.0:8000/docs/  | Auto-generated OpenAPI **Swagger UI** |
-| http://0.0.0.0:8000/redoc/ | Auto-generated OpenAPI **ReDoc**      |
+| URI                           | Description                           |
+| ----------------------------- | ------------------------------------- |
+| http://0.0.0.0:8000/v2/tasks/ | CRUD operations                       |
+| http://0.0.0.0:8000/docs/     | Auto-generated OpenAPI **Swagger UI** |
+| http://0.0.0.0:8000/redoc/    | Auto-generated OpenAPI **ReDoc**      |
 
 ---
 
