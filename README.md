@@ -20,6 +20,14 @@ It demonstrates building a _Medium-Scaled_ Python API, using FastAPI.
 
 ---
 
+## New in Version 2.0.0
+
+- Added verification for password existence.
+- Added 3 other example requests in [api.md](api.md)
+- Added searching feature with the `search` query parameter
+
+for more, see [Change Log](./CHANGELOG.md)
+
 ## ⚙️ Features
 
 - A **RESTful API** using FastAPI, controlling:

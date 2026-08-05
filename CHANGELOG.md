@@ -26,3 +26,10 @@
 ### Security
 
 - Solved dupliate IDs edge case in `/delete/`
+
+## 2.0.1 - 2026-8-05
+
+### Fixed
+
+- Removed trailing slashes in the main _APIRouter_ object.
+- Fixed SQL Queries structure to enable Ordering by IDs.

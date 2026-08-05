@@ -37,12 +37,12 @@ def view_tasks(
                priority,
                done
         FROM tasks
-        ORDER BY id
             """
 
         if clauses:
-            query += f"\nWHERE " + " AND ".join(clauses) + ";"
+            query += f"\nWHERE " + " AND ".join(clauses)
 
+        query += "\nORDER BY id;"
         cursor.execute(query, params)  # type: ignore
 
         return {
