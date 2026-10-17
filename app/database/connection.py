@@ -1,13 +1,13 @@
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
-from ..internal.env import host, port, dbname, user, password
+from ..internal.env import dbname, user, password
 
 # Database connection
 pool = ConnectionPool(
     conninfo=(
-        f"host={host} "
+        f"host=db"
         f"dbname={dbname} "
-        f"port={port} "
+        f"port=5432"
         f"user={user} "
         f"password={password}"
     ),
