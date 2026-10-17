@@ -193,6 +193,9 @@ PUT /v2/tasks/1 HTTP/1.1
 
 ```http
 HTTP/1.1 422 Unprocessable Content
+```
+
+```JSON
 {
   "error": "Request Validation Error",
   "details": [

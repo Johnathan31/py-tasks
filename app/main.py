@@ -18,9 +18,8 @@ except ImportError:
     raise ImportError(
         "Can't import from current path. Run the server from the project root.")
 
+
 # Application lifespan
-
-
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     config_logging()

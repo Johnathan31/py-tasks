@@ -14,8 +14,8 @@ class Priorities(StrEnum):
 
 class TaskFields(BaseModel):
     title: str = Field(..., max_length=50)
-    priority: Priorities
-    done: bool
+    priority: Priorities = "normal"
+    done: bool = False
 
 
 class TaskOptionalFields(BaseModel):

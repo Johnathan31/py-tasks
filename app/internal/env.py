@@ -7,16 +7,13 @@ env: Path = Path(__file__).parent.parent.parent / ".env"
 
 load_dotenv(dotenv_path=env, override=True)
 
-if not getenv("PASSWORD"):
-    raise Exception(
-        "\"PASSWORD\" environment variable not provided or empty.")
+if getenv("POSTGRES_PASSWORD") is None or getenv("POSTGRES_PASSWORD") == "":
+    raise Exception("\"POSTGRES_PASSWORD\" environment variable not provided or empty.")
 
 # Environment Variables
 
-host: str = getenv("HOST") or "localhost"
-port: int | Any = getenv("PORT") or 5432
-dbname: str = (getenv("DB_NAME") or getenv("DB")) or "tasks"
-user: str = getenv("USER") or "postgres"
-password: Optional[str] = getenv("PASSWORD")
+dbname: str = getenv("POSTGRES_DB") or "tasks"
+user: str = getenv("POSTGRES_USER") or "postgres"
+password: Optional[str] = getenv("POSTGRES_PASSWORD")
 
 debug: bool = True if getenv("DEBUG") == "true" else False
