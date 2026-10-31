@@ -1,8 +1,8 @@
-"""Tests for POST /v2/tasks/."""
+"""Tests for POST /v3/tasks/."""
 import pytest
 from fastapi.exceptions import RequestValidationError
 
-TASKS_URL = "/v2/tasks/"
+TASKS_URL = "/v3/tasks/"
 
 
 def valid_payload(**overrides):

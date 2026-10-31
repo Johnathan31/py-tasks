@@ -1,5 +1,5 @@
-"""Tests for PUT and PATCH /v2/tasks/{_id}."""
-TASKS_URL = "/v2/tasks/"
+"""Tests for PUT and PATCH /v3/tasks/{_id}."""
+TASKS_URL = "/v3/tasks/"
 
 
 def create_task(client, *, title="Original title", priority="normal", done=False):

@@ -1,5 +1,5 @@
-"""Tests for GET /v2/tasks/ and GET /v2/tasks/{_id}."""
-TASKS_URL = "/v2/tasks/"
+"""Tests for GET /v3/tasks/ and GET /v3/tasks/{_id}."""
+TASKS_URL = "/v3/tasks/"
 
 
 def create_task(client, *, title="Read test task", priority="normal", done=False):

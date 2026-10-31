@@ -1,5 +1,5 @@
-"""Tests for DELETE /v2/tasks/ and DELETE /v2/tasks/{_id}."""
-TASKS_URL = "/v2/tasks/"
+"""Tests for DELETE /v3/tasks/ and DELETE /v3/tasks/{_id}."""
+TASKS_URL = "/v3/tasks/"
 
 
 def create_task(client, *, title="Task to delete", priority="normal", done=False):
