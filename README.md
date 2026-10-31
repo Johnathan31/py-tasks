@@ -1,30 +1,31 @@
 # 🚀 FastAPI + PostgreSQL
 
-A **Python** task manager API (CRUD API) built with FastAPI and PostgreSQL.
-It demonstrates building a _Medium-Scaled_ Python API, using FastAPI.
+A **Python** task manager API (CRUD API) built with FastAPI, PostgreSQL, and Docker compose.
+It demonstrates building an isolated backend server with persistent database (PostgreSQL)
 
 ---
 
 ## 📚 Tech Stack
 
-| Name         | Description                        |
-| ------------ | ---------------------------------- |
-| FastAPI      | A REST API server                  |
-| Pydantic     | Data Structures and models         |
-| Enums        | Making key-value pairs collections |
-| PostgreSQL   | Persistent Database Storage        |
-| Dotenv       | Accessing Environment variables    |
-| psycopg3     | PostgreSQL Python Driver           |
-| psycopg_pool | _psycopg3_ Pooling driver          |
-| logging      | Logging error tracebacks           |
+| Name           | Description                        |
+| -------------- | ---------------------------------- |
+| FastAPI        | A REST API server                  |
+| Pydantic       | Data Structures and models         |
+| Enums          | Making key-value pairs collections |
+| PostgreSQL     | Persistent Database Storage        |
+| Dotenv         | Accessing Environment variables    |
+| psycopg3       | PostgreSQL Python Driver           |
+| psycopg_pool   | _psycopg3_ Pooling driver          |
+| logging        | Logging error tracebacks           |
+| Docker compose | Isolating the project environment  |
 
 ---
 
-## New in Version 2.0.0
+## New in Version 3.0.0
 
-- Added verification for password existence.
-- Added 3 other example requests in [api.md](api.md)
-- Added searching feature with the `search` query parameter
+- Implemented Docker support.
+- Added tests.
+- tasks priority and done fields are optional in POST /v2/tasks/.
 
 for more, see [Change Log](./CHANGELOG.md)
 
@@ -60,6 +61,9 @@ for more, see [Change Log](./CHANGELOG.md)
 
 - **Data filtering** in GET Requests.
 
+- A fully containerized environment
+
+- Test coverage with __60 pytest tests__.
 ---
 
 # 🪾 Project Tree
@@ -68,6 +72,7 @@ for more, see [Change Log](./CHANGELOG.md)
 py-tasks
 ├── app # application source code
 │   ├── database # database configs
+│   │   ├── __init__.py
 │   │   ├── connection.py # PostgreSQL Connection pool
 │   │   └── dependencies.py # dependency injection
 │   ├── internal # shared components and internal utilities
@@ -83,17 +88,28 @@ py-tasks
 │   │   ├── read.py   # Read operations
 │   │   ├── router.py # APIRouter manager
 │   │   └── update.py # Update operations
+│   ├── tests # Test coverage
+│   │   ├── __init__.py
+│   │   ├── conftest.py    # pytest configuration
+│   │   ├── test_create.py # create operations tests
+│   │   ├── test_delete.py # delete operations tests
+│   │   ├── test_read.py   # read operations tests
+│   │   └── test_update.py # update operations tests
 │   ├── __init__.py
 │   ├── exceptions.py # exceptions handler
 │   ├── main.py # main FastAPI file
 │   └── schema.sql # main SQL Schema
+├── .dockerignore
 ├── .env.example # sample .env file
 ├── .gitignore
+├── CHANGELOG.md
+├── Dockerfile # Docker image builder
 ├── README.md
 ├── __init__.py
-├── api.md # Some API descriptions
+├── api.md # API docs
+├── compose.yaml # Docker compose config
 ├── requirements.txt # python packages requirements
-└── start.sh # a small script to serve the API
+└── start.sh # a Shell script to serve the API
 ```
 
 ---
@@ -124,75 +140,23 @@ git clone https://github.com/<your-username>/py-tasks.git
 cd py-tasks
 ```
 
-2. Install and activate the _Virtual Environment_, depending on your OS:
-
-```Bash
-python -m venv .venv
-
-# Windows command prompt (cmd)
-.venv\Scripts\activate.bat
-
-# Windows Powershell
-.venv\Scripts\Activate.ps1
-
-# Linux/macOS
-source .venv/bin/activate
-```
-
-3. Install requirements and dependencies:
-
-```
-pip install -r ./requirements.txt
-```
-
-4. Run the main [SQL Queries](./app/schema.sql)
-
-```
-psql -d tasks -f ./app/schema.sql
-```
-
-5. Run _PostgreSQL_ service:
-
-```Bash
-# Linux
-systemctl start postgresql
-
-# Some Linux Distributions
-service postgresql start
-
-# MacOS
-brew services start postgresql
-
-# Windows
-net start postgresql-x64-17
-```
-
-6. Create a `.env` file:
+2. Create a `.env` file:
 
 ```env
-PORT=5432
-HOST=localhost
-USER=postgres
-PASSWORD=my_password
-DB=tasks
+POSTGRES_USER=postgres
+POSTGRESPASSWORD=my_password
+POSTGRES_DB=tasks
+DB_URL=postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:5432/{POSTGRES_DB}
 DEBUG=true
 ```
 
 For more details, see [.env sample file](./.env.example)
 
-7. Run the server using [uvicorn](https://uvicorn.dev):
+3. Start the docker container:
 
 ```Bash
-uvicorn app.main:app --reload --host=0.0.0.0
+sudo docker compose up
 ```
-
-or directly with a ready [shell script](./start.sh):
-
-```Bash
-chmod +x start.sh
-./start.sh
-```
-
 ---
 
 ## 🌐 Common URIs
@@ -222,12 +186,27 @@ class Priorities(StrEnum):
 
 ---
 
+# Tests coverage
+
+1. Create a `TEST_DATABASE_URL` env var:
+```.env
+TEST_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+```
+the intended database must be seperate from the production database.
+
+2. Enter Docker shell:
+```Bash
+sudo docker exec -it py-tasks-backend-1 sh
+```
+
+3. Run tests:
+```Bash
+cd app
+pytest -v
+```
+
+---
+
 ## 🔮 Future Improvements
 
 - _Pagination_.
-
-- Using **Docker Container** for a fully isolated environment.
-
-- Implementing a frontend service (e.g. React/Vue) to complete the stack.
-
-- Unit tests.
