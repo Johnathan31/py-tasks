@@ -4,14 +4,14 @@
 
 | Method | Endpoint         | Description           |
 | ------ | ---------------- | --------------------- |
-| GET    | /v2/tasks/          | Get all tasks         |
-| GET    | /v2/tasks/{\_id}    | Get a task by ID      |
-| POST   | /v2/tasks/          | Create a task         |
-| DELETE | /v2/tasks/          | Delete all tasks      |
-| DELETE | /v2/tasks/{\_id}    | Delete a task by ID   |
-| DELETE | /v2/tasks/completed | Delete finished tasks |
-| PUT    | /v2/tasks/{\_id}    | Update a task by ID   |
-| PATCH  | /v2/tasks/{\_id}    | Update part of a task |
+| GET    | /v3/tasks/          | Get all tasks         |
+| GET    | /v3/tasks/{\_id}    | Get a task by ID      |
+| POST   | /v3/tasks/          | Create a task         |
+| DELETE | /v3/tasks/          | Delete all tasks      |
+| DELETE | /v3/tasks/{\_id}    | Delete a task by ID   |
+| DELETE | /v3/tasks/completed | Delete finished tasks |
+| PUT    | /v3/tasks/{\_id}    | Update a task by ID   |
+| PATCH  | /v3/tasks/{\_id}    | Update part of a task |
 
 ---
 
@@ -22,7 +22,7 @@
 #### Request
 
 ```http
-POST /v2/tasks/ HTTP/1.1
+POST /v3/tasks/ HTTP/1.1
 Content-Type: application/json
 ```
 
@@ -30,7 +30,6 @@ Content-Type: application/json
 {
   "title": "Buying groceries",
   "priority": "high",
-  "done": false
 }
 ```
 
@@ -58,7 +57,7 @@ HTTP/1.1 201 Created
 #### Request
 
 ```http
-GET /v2/tasks/1 HTTP/1.1
+GET /v3/tasks/1 HTTP/1.1
 ```
 
 #### Response
@@ -85,7 +84,7 @@ HTTP/1.1 200 OK
 #### Request
 
 ```http
-GET /v2/tasks/?search=groceries HTTP/1.1
+GET /v3/tasks/?search=groceries HTTP/1.1
 ```
 
 #### Response
@@ -114,7 +113,7 @@ HTTP/1.1 200 OK
 #### Request
 
 ```http
-DELETE /v2/tasks/1 HTTP/1.1
+DELETE /v3/tasks/1 HTTP/1.1
 ```
 
 #### Response
@@ -130,7 +129,7 @@ HTTP/1.1 204 No Content
 #### Request (example 1)
 
 ```http
-PATCH /v2/tasks/1 HTTP/1.1
+PATCH /v3/tasks/1 HTTP/1.1
 ```
 
 ```JSON
@@ -150,7 +149,7 @@ HTTP/1.1 204 No Content
 #### Request (example 2)
 
 ```http
-PATCH /v2/tasks/1 HTTP/1.1
+PATCH /v3/tasks/1 HTTP/1.1
 ```
 
 ```JSON
@@ -179,7 +178,7 @@ HTTP/1.1 422 Unprocessable Content
 #### Request
 
 ```http
-PUT /v2/tasks/1 HTTP/1.1
+PUT /v3/tasks/1 HTTP/1.1
 ```
 
 ```JSON

@@ -25,7 +25,7 @@ It demonstrates building an isolated backend server with persistent database (Po
 
 - Implemented Docker support.
 - Added tests.
-- tasks priority and done fields are optional in POST /v2/tasks/.
+- tasks priority and done fields are optional in `POST /v3/tasks/`.
 
 for more, see [Change Log](./CHANGELOG.md)
 
@@ -120,7 +120,6 @@ py-tasks
 
 - Python _v3.13_
 - FastAPI _v0.138_
-- Rust (for compiling FastAPI source code)
 - Rustc (Optional)
 
 ### Skills
@@ -144,7 +143,7 @@ cd py-tasks
 
 ```env
 POSTGRES_USER=postgres
-POSTGRESPASSWORD=my_password
+POSTGRES_PASSWORD=my_password
 POSTGRES_DB=tasks
 DB_URL=postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:5432/{POSTGRES_DB}
 DEBUG=true
@@ -152,7 +151,12 @@ DEBUG=true
 
 For more details, see [.env sample file](./.env.example)
 
-3. Start the docker container:
+3. Run startup SQL queries:
+```Bash
+psql -f ./app/schema.sql
+```
+
+4. Start the docker container:
 
 ```Bash
 sudo docker compose up
@@ -163,7 +167,7 @@ sudo docker compose up
 
 | URI                           | Description                           |
 | ----------------------------- | ------------------------------------- |
-| http://0.0.0.0:8000/v2/tasks/ | CRUD operations                       |
+| http://0.0.0.0:8000/v3/tasks/ | CRUD operations                       |
 | http://0.0.0.0:8000/docs/     | Auto-generated OpenAPI **Swagger UI** |
 | http://0.0.0.0:8000/redoc/    | Auto-generated OpenAPI **ReDoc**      |
 
@@ -190,7 +194,7 @@ class Priorities(StrEnum):
 
 1. Create a `TEST_DATABASE_URL` env var:
 ```.env
-TEST_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+TEST_DATABASE_URL=postgresql://POSTGRES_USER:POSTGRES_PASSWORD@db:5432/POSTGRES_TEST_DB
 ```
 the intended database must be seperate from the production database.
 
