@@ -5,9 +5,9 @@ from ..internal.env import dbname, user, password
 # Database connection
 pool = ConnectionPool(
     conninfo=(
-        f"host=db"
+        f"host=db "
         f"dbname={dbname} "
-        f"port=5432"
+        f"port=5432 "
         f"user={user} "
         f"password={password}"
     ),

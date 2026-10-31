@@ -15,9 +15,7 @@ try:
     from .internal.log import config_logging
 
 except ImportError:
-    raise ImportError(
-        "Can't import from current path. Run the server from the project root.")
-
+    raise ImportError("Can't import from current path. Run the server from the project root.")
 
 # Application lifespan
 @asynccontextmanager

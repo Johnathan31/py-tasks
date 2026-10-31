@@ -19,5 +19,5 @@ RUN chown -R python:python /app
 USER python
 
 # Starting the docker container
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["./start.sh"]
 
