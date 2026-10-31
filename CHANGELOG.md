@@ -34,7 +34,7 @@
 - Removed trailing slashes in the main _APIRouter_ object.
 - Fixed SQL Queries structure to enable Ordering by IDs.
 
-## v2.0.0 - 2026-10-31
+## v3.0.0 - 2026-10-31
 
 ### Added
 
@@ -53,3 +53,10 @@
 ### features
 
 - [82eedaf](https://github.com/Johnathan31/py-tasks/commit/82eedafd6c1ae88fa62be1f9b28982387e0d5e9f): `priority` and `done` are now optional fields.
+
+## v3.0.1 - 2026-10-31
+
+### Fixed
+
+- [d63a84a](https://github.com/Johnathan31/py-tasks/commit/d63a84ad369b9470804d79a1ecef3b5fc6de5a2e): fix `/v2/` prefix to `/v3/` in docs.
+- [c0e6992](https://github.com/Johnathan31/py-tasks/commit/c0e6992a6535df981b82b125c852bab0c28a4a52): fix `/v2/` to `/v3/`.
